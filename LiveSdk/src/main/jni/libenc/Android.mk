@@ -1,0 +1,14 @@
+LOCAL_PATH:=$(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_CPP_EXTEMSION:=.cc
+LOCAL_SRC_FILES := libenc.cc
+LOCAL_MODULE:=libenc
+
+LOCAL_CFLAGS:=
+LOCAL_C_INCLUDES+=$(LOCAL_PATH)/../libyuv/include $(LOCAL_PATH)/../libx264
+
+LOCAL_STATIC_LIBRARIES :=libx264
+LOCAL_SHARED_LIBRARIES:=libyuv
+
+include $(BUILD_SHARED_LIBRARY)

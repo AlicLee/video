@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/arcLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/prepare_bg_height">
+
+        <com.example.lee.videoandroid.customview.ArcHeaderView
+            android:id="@+id/arcView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/preparePush_arcHeight"
+            app:endColor="@color/blue"
+            app:startColor="@color/lightBlue" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/preparePush_arcHeight"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/bigMargin"
+            android:layout_marginRight="@dimen/bigMargin"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rect_gradient">
+
+            <EditText
+                android:id="@+id/title_ev"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_layout_height"
+                android:layout_marginLeft="@dimen/minMargin"
+                android:layout_marginRight="@dimen/minMargin"
+                android:layout_marginTop="@dimen/midMargin"
+                android:gravity="center_horizontal"
+                android:hint="@string/title_hint"
+                android:maxEms="20" />
+
+            <TextView
+                android:id="@+id/description_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/title_layout_height"
+                android:layout_below="@+id/title_ev"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/description_txt"
+                android:textColor="@color/blue" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/arcLayout"
+        android:padding="@dimen/minMargin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/midMargin"
+            android:layout_marginStart="@dimen/midMargin"
+            android:maxEms="2"
+            android:maxLines="2"
+            android:text="设置封面"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/maxSp" />
+
+        <ImageView
+            android:id="@+id/add_icon_btn"
+            android:layout_width="240dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/image_add_selector"
+            android:clickable="true"
+            android:scaleType="fitXY" />
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/startPreparePush"
+        android:layout_width="@dimen/preparePush_btnwidth"
+        android:layout_height="@dimen/preparePush_btnheight"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/preparebtn_bg"
+        android:gravity="center"
+        android:text="@string/pushtv"
+        android:textColor="@color/white" />
+</RelativeLayout>

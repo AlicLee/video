@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">VideoAndroid</string>
+    <string name="noNetWorkException">无网络链接,请检查网络</string>
+    <string name="bottom_home_tv">推荐</string>
+    <string name="bottom_user_tv">我的</string>
+    <string name="bottom_video_tv">视频</string>
+    <string name="login_tv">登录</string>
+    <string name="register_tv">注册</string>
+    <string name="register_btntv">注册并登录</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="email">邮箱</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="nickname">手机号</string>
+    <string name="title_hint">添加标题</string>
+    <string name="description_txt">添加描述</string>
+    <string name="pushtv">开启直播</string>
+    <!--字码-->
+    <dimen name="midSp">18sp</dimen>
+    <dimen name="minSp">16sp</dimen>
+    <dimen name="bigSp">20sp</dimen>
+    <dimen name="maxSp">24sp</dimen>
+    <!--图片大小-->
+    <dimen name="mPic">16dp</dimen>
+    <dimen name="hPic">32dp</dimen>
+    <dimen name="xhPic">48dp</dimen>
+    <dimen name="xxhPic">64dp</dimen>
+    <dimen name="xxxhPic">80dp</dimen>
+    <!--边距-->
+    <dimen name="midMargin">10dp</dimen>
+    <dimen name="minMargin">5dp</dimen>
+    <dimen name="bigMargin">20dp</dimen>
+    <dimen name="maxMargin">30dp</dimen>
+    <!--登录边距-->
+    <dimen name="login_btn_width">100dp</dimen>
+    <dimen name="title_layout_height">50dp</dimen>
+    <dimen name="prepare_bg_height">200dp</dimen>
+    <dimen name="preparePush_arcHeight">100dp</dimen>
+    <dimen name="preparePush_btnwidth">300dp</dimen>
+    <dimen name="preparePush_btnheight">50dp</dimen>
+</resources>
