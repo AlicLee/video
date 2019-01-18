@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  * Created by zhouwei on 2017/12/5.
  */
 
-public class ArcHeaderView extends View {
+public final class ArcHeaderView extends View {
     private Paint mPaint;
     private Bitmap mBitmap;
     private int mHeight;

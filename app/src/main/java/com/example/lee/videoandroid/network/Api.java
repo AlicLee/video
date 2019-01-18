@@ -1,12 +1,16 @@
 package com.example.lee.videoandroid.network;
 
+import android.support.v4.media.AudioAttributesCompat;
+
 import com.google.gson.JsonObject;
 
 
+import java.io.File;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
@@ -18,7 +22,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface Api {
-    public String HOST = "http://192.168.103.111:8080/";
+    public String HOST = "http://192.168.103.111:8081/";
     public String userModule = "/user", liveModule = "/live";
 
     /**
@@ -36,10 +40,11 @@ public interface Api {
     @POST(userModule + "/register")
     Observable<BaseResponse> register(@Body RequestBody registerBody);
 
-    @POST(liveModule + "updateOrInsert")
+    @POST(liveModule + "/updateOrInsert")
     Observable<BaseResponse> updateOrInsert(@Body RequestBody body);
 
+    @Multipart
     @POST("/upload")
-    Observable<BaseResponse> upload(@Part MultipartBody.Part multipart);
+    Call<BaseResponse> upload(@Part MultipartBody.Part multipart);
 
 }

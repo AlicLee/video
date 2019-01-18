@@ -1,7 +1,9 @@
 package com.example.lee.videoandroid.network;
 
+import android.accounts.NetworkErrorException;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -14,6 +16,9 @@ import com.example.lee.videoandroid.util.ToastUtils;
 import java.util.Observer;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Subscriber;
@@ -22,23 +27,20 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class HttpPresenter<T> implements HttpBuilder<T> {
-    private Observable observable;
     private HttpTaskListener<T> listener;
     private Context mContex;
     private boolean isAddCommonSubScription = true;//是否加入公共生命周期管理
     private boolean isShowDialog = true;
-    private static HttpPresenter httpPresenter;
 
     private static class HttpPresenterBuilder {
         private final static HttpPresenter instance = new HttpPresenter();
     }
 
     public static HttpPresenter getInstance() {
-        httpPresenter = new HttpPresenter();
-        return httpPresenter;
+        return HttpPresenterBuilder.instance;
     }
 
-    private Subscription request() {
+    private Subscription request(Observable observable) {
         //先检查网络
         if (!SystemUtil.isMobileNetworkConnected(mContex)) {
             ToastUtils.showLongToast(R.string.noNetWorkException);
@@ -69,7 +71,7 @@ public class HttpPresenter<T> implements HttpBuilder<T> {
                         if (listener != null) {
                             listener.onError(e.getMessage());
                         }
-                        httpPresenter = null;
+//                        httpPresenter = null;
                         mContex = null;
                     }
 
@@ -85,7 +87,7 @@ public class HttpPresenter<T> implements HttpBuilder<T> {
                                 listener.onError(tBaseResponse.message);
                             }
                         }
-                        httpPresenter = null;
+//                        httpPresenter = null;
                         mContex = null;
                     }
                 });
@@ -106,19 +108,47 @@ public class HttpPresenter<T> implements HttpBuilder<T> {
     }
 
     @Override
-    public HttpBuilder setObservable(Observable observable) {
-        this.observable = observable;
+    public HttpBuilder<T> create(Observable observable) {
+        if (observable == null) {
+            LogUtil.getInstance().e("请设置observable");
+            if (listener != null) listener.onError("observable 为空");
+            return this;
+        }
+        request(observable);
         return this;
     }
 
     @Override
-    public Subscription create() {
-        if (observable == null) {
-            LogUtil.getInstance().e("请设置observable");
-            if (listener != null) listener.onError("observable 为空");
+    public HttpBuilder create(Call call) {
+        if (!SystemUtil.isMobileNetworkConnected(mContex)) {
+            ToastUtils.showLongToast(R.string.noNetWorkException);
+            if (listener != null)
+                listener.onError(mContex.getResources().getString(R.string.noNetWorkException));
             return null;
         }
-        return request();
+        if (mContex != null && isShowDialog) {
+            HttpUtils.getInstance().showProgressBar(mContex);
+        }
+        call.enqueue(new Callback<T>() {
+            @Override
+            public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+                if (listener != null) {
+                    if (response.isSuccessful()) {
+                        listener.onSuccess(response.body());
+                    } else {
+                        listener.onError(response.message());
+                    }
+                }
+                mContex=null;
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
+                listener.onError(t.getMessage());
+                mContex=null;
+            }
+        });
+        return this;
     }
 
 

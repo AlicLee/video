@@ -46,4 +46,5 @@
     <!--黑色-->
     <color name="Black">#000000</color>
     <color name="red">#B00020</color>
+    <color name="halfTransparent">#e0000000</color>
 </resources>

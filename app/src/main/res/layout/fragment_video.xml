@@ -3,21 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_layout_height"
-        android:background="@drawable/title_bg">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/bottom_video_tv"
-            android:textColor="@color/white"
-            android:textSize="@dimen/bigSp" />
-    </RelativeLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/video_recyclerview"
         android:layout_width="match_parent"

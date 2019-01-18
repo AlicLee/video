@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +37,6 @@ import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class PreparePushActivity extends BaseActivity<PreparePushPresenter> implements PreparePushContact.View {
@@ -54,6 +54,10 @@ public class PreparePushActivity extends BaseActivity<PreparePushPresenter> impl
     private List<String> picPathList;
     private AlertDialog descriptionDialog;
     private LiveBean bean = new LiveBean();
+    private View dialogView;
+    private TextInputLayout dialogInputLayout;
+    private EditText dialogEditText;
+    private String dialogEditValue;
 
     @Override
     public int setLayoutView() {
@@ -68,23 +72,21 @@ public class PreparePushActivity extends BaseActivity<PreparePushPresenter> impl
     }
 
     private void createDescriptionDialog() {
-        final View view = LayoutInflater.from(PreparePushActivity.this).inflate(R.layout.item_dialog, null, false);
-        final TextInputLayout inputLayout = (TextInputLayout) view.findViewById(R.id.dialog_evLayout);
-        final EditText editText = (EditText) view.findViewById(R.id.dialog_ev);
-        descriptionDialog = new AlertDialog.Builder(PreparePushActivity.this).setTitle("设置公告").setNegativeButton("确定", new DialogInterface.OnClickListener() {
+        dialogView = LayoutInflater.from(PreparePushActivity.this).inflate(R.layout.item_dialog, null, false);
+        dialogInputLayout = (TextInputLayout) dialogView.findViewById(R.id.dialog_evLayout);
+        dialogEditText = (EditText) dialogView.findViewById(R.id.dialog_ev);
+        descriptionDialog = new AlertDialog.Builder(PreparePushActivity.this).setTitle("设置公告").setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (!StringUtil.isEmpty(editText.getText().toString())) {
-                    descriptionTv.setText(editText.getText().toString());
-                }
-                dialog.dismiss();
+
             }
-        }).setPositiveButton("取消", new DialogInterface.OnClickListener() {
+
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        }).setView(view).create();
+        }).setView(dialogView).create();
     }
 
     private void configActionBar() {
@@ -127,6 +129,7 @@ public class PreparePushActivity extends BaseActivity<PreparePushPresenter> impl
         switch (view.getId()) {
             case R.id.description_tv:
                 descriptionDialog.show();
+                setDialogPositiveClick();
                 break;
             case R.id.add_icon_btn:
                 Matisse.from(PreparePushActivity.this)
@@ -140,19 +143,21 @@ public class PreparePushActivity extends BaseActivity<PreparePushPresenter> impl
             case R.id.startPreparePush:
                 if (StringUtil.isEmpty(titleEv.getText().toString())) {
                     ToastUtils.showShortToast("标题不能为空");
-                    return;
+                    break;
                 }
                 if (StringUtil.isEmpty(bean.getLiveIcon())) {
                     ToastUtils.showShortToast("请选择一个封面");
-                    return;
+                    break;
                 }
                 String userBeanString = SharedPreUtil.getString(this, Settings.SharedPreUserKey, "");
-                if (userBeanString.length() == 0) {
+                if (StringUtil.isEmpty(userBeanString)) {
                     ToastUtils.showShortToast("用户未登陆");
-                    return;
+                    break;
                 }
                 UserBean userBean = new Gson().fromJson(userBeanString, UserBean.class);
                 bean.setUserId(userBean.getId());
+                bean.setLiveTitle(titleEv.getText().toString());
+                bean.setLiveDescription(dialogEditValue);
                 bean.setLiveStatus(0);
                 if (mPresenter != null)
                     mPresenter.preparePush(bean);
@@ -160,14 +165,37 @@ public class PreparePushActivity extends BaseActivity<PreparePushPresenter> impl
         }
     }
 
+    /**
+     * 因为dialog会自动消失,所以重新dialog的方法
+     */
+    private void setDialogPositiveClick() {
+        descriptionDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String editValue = dialogEditText.getText().toString();
+                if (editValue.length() > 15) {
+                    ToastUtils.showShortToast("不能超过15个字符");
+                    return;
+                }
+                if (!(StringUtil.isEmpty(editValue))) {
+                    dialogEditValue = editValue;
+                    descriptionTv.setText(dialogEditValue);
+                }
+                descriptionDialog.dismiss();
+            }
+        });
+    }
+
     @Override
-    public void preparePushSuccess(LiveBean liveBean) {
-//        Intent intent=new Intent(PreparePushActivity.this,);
+    public void preparePushSuccess() {
+        Intent intent = new Intent(PreparePushActivity.this, PushActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void preparePushFailure(String errorMessage) {
-
+        Log.e("preparePushActivity", "preparePushFailure: " + errorMessage);
+        ToastUtils.showShortToast(errorMessage);
     }
 
     @Override
@@ -178,7 +206,8 @@ public class PreparePushActivity extends BaseActivity<PreparePushPresenter> impl
 
     @Override
     public void uploadIconFailure(String errorMessage) {
-        ToastUtils.showShortToast("上传成功");
+        Log.e("preparePushActivity", "uploadIconFailure: " + errorMessage);
+        ToastUtils.showShortToast("上传失败");
     }
 
 }

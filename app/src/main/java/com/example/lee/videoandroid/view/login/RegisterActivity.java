@@ -30,7 +30,6 @@ import com.google.gson.Gson;
 import android.support.v7.app.ActionBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RegisterActivity extends BaseActivity implements RegisterContact.View {
 
@@ -95,7 +94,11 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
                     userNameInputLayout.setError("用户名不能为空");
                     userNameInputLayout.setErrorTextAppearance(R.style.error_appearance);
                 } else {
-                    UserBean userBean = new UserBean(userNameEv.getText().toString(), nickNameEv.getText().toString(), emailEv.getText().toString(), passwordEv.getText().toString(), sex);
+                    UserBean userBean = new UserBean();
+                    userBean.setSex(sex);
+                    userBean.setUserPhone(nickNameEv.getText().toString());
+                    userBean.setUserPassword(passwordEv.getText().toString());
+                    userBean.setUserName(userNameEv.getText().toString());
                     if (mPresenter instanceof RegisterPresenter) {
                         RegisterPresenter presenter = (RegisterPresenter) mPresenter;
                         presenter.register(userBean);
@@ -126,7 +129,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     @Override
     public void registerSuccess(UserBean userBean) {
         SharedPreUtil.saveString(this, Settings.SharedPreUserKey, new Gson().toJson(userBean));
-        Intent intent = new Intent();
+        Intent intent=new Intent();
     }
 
     @Override

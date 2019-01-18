@@ -1,6 +1,5 @@
 package com.example.lee.livesdk;
 
-import android.content.res.Configuration;
 import android.media.AudioRecord;
 import android.media.audiofx.AcousticEchoCanceler;
 import android.media.audiofx.AutomaticGainControl;
@@ -36,10 +35,10 @@ public class SrsPublisher {
         mCameraView = view;
         mCameraView.setPreviewCallback(new SrsCameraView.PreviewCallback() {
             @Override
-            public void onGetYuvFrame(byte[] data) {
+            public void onGetRgbaFrame(byte[] data, int width, int height) {
                 calcSamplingFps();
                 if (!sendAudioOnly) {
-                    mEncoder.onGetYuvFrame(data);
+                    mEncoder.onGetRgbaFrame(data, width, height);
                 }
             }
         });
@@ -148,7 +147,6 @@ public class SrsPublisher {
         if (!mEncoder.start()) {
             return;
         }
-
         mCameraView.enableEncoding();
         startAudio();
     }
@@ -240,6 +238,7 @@ public class SrsPublisher {
     public void setScreenOrientation(int orientation) {
         mCameraView.setPreviewOrientation(orientation);
         mEncoder.setScreenOrientation(orientation);
+        mCameraView.onChangeScreenOrientation(orientation);
     }
 
     public void setVideoHDMode() {
@@ -294,7 +293,7 @@ public class SrsPublisher {
         }
     }
 
-    public void setEncodeHandler(SrsEncoderHandler handler) {
+    public void setEncodeHandler(SrsEncodeHandler handler) {
         mEncoder = new SrsEncoder(handler);
         if (mFlvMuxer != null) {
             mEncoder.setFlvMuxer(mFlvMuxer);

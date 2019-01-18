@@ -16,6 +16,7 @@
     <string name="title_hint">添加标题</string>
     <string name="description_txt">添加描述</string>
     <string name="pushtv">开启直播</string>
+    <string name="orientationSetting">横竖屏切换</string>
     <!--字码-->
     <dimen name="midSp">18sp</dimen>
     <dimen name="minSp">16sp</dimen>

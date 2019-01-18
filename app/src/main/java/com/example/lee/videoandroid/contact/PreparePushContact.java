@@ -6,7 +6,7 @@ import java.io.File;
 
 public interface PreparePushContact {
     public interface View {
-        public void preparePushSuccess(LiveBean liveBean);
+        public void preparePushSuccess();
 
         public void preparePushFailure(String errorMessage);
 

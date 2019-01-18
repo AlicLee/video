@@ -22,7 +22,7 @@ public class HomePresenter extends BasePresenter<HomeFragment> implements HomeCo
 
     @Override
     public void getLiveByPages(int index, int pageSize) {
-        HttpPresenter.getInstance().setContext(fragment.getActivity()).setObservable(api.requestLiveByPages(index, pageSize)).setCallBack(new HttpTaskListener() {
+        HttpPresenter.getInstance().setContext(fragment.getActivity()).setCallBack(new HttpTaskListener() {
             @Override
             public void onSuccess(Object o) {
                 try {
@@ -38,7 +38,6 @@ public class HomePresenter extends BasePresenter<HomeFragment> implements HomeCo
             public void onError(String message) {
                 fragment.getLiveFailure(message);
             }
-        }).create();
-
+        }).create(api.requestLiveByPages(index, pageSize));
     }
 }

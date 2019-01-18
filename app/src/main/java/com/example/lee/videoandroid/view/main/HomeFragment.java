@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.lee.videoandroid.R;
@@ -21,10 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomeFragment extends BaseFragment implements View.OnClickListener, HomeContact.View {
-
-    @BindView(R.id.title_layout)
-    RelativeLayout titleLayout;
+public class HomeFragment extends BaseFragment<HomePresenter> implements View.OnClickListener, HomeContact.View {
     @BindView(R.id.home_recyclerview)
     RecyclerView homeRecyclerview;
     @BindView(R.id.home_addbtn)
@@ -32,25 +33,37 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     HomeAdapter adapter;
     private boolean haveMoreData = true;
     private int index = 0, pageSize = 10;
+    private View emptyView;
+    private ProgressBar refreshBtn;
+    private TextView reasonView;
+    private TextView errorView;
 
     @Override
     public void initData(View view) {
-        if (!(mPresenter instanceof HomePresenter)) {
-            return;
-        }
-        final HomePresenter homePresenter = (HomePresenter) mPresenter;
-        homePresenter.getLiveByPages(index, pageSize);
+        mPresenter.getLiveByPages(index, pageSize);
+        adapter = new HomeAdapter(getActivity(), R.layout.item_homeadapter);
+        homeRecyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                homePresenter.getLiveByPages(index++, pageSize);
+                mPresenter.getLiveByPages(index++, pageSize);
             }
         }, homeRecyclerview);
+//        adapter.bindToRecyclerView(homeRecyclerview);
+//        homeRecyclerview.setAdapter(adapter);
     }
 
     @Override
     public void initView(View view) {
+        initEmptyView();
         homeAddbtn.setOnClickListener(this);
+    }
+
+    private void initEmptyView() {
+        emptyView = LayoutInflater.from(getActivity()).inflate(R.layout.view_empty, null);
+        refreshBtn = (ProgressBar) emptyView.findViewById(R.id.empty_refresh_view);
+        reasonView = (TextView) emptyView.findViewById(R.id.empty_reason_txt);
+        errorView = (TextView) emptyView.findViewById(R.id.empty_error_txt);
     }
 
     @Override
@@ -71,28 +84,31 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void getLiveSuccess(List<LiveBean> liveBeans) {
-        if (adapter == null) {
-            //第一次获取数据
-            adapter = new HomeAdapter(getActivity(), R.layout.item_homeadapter, liveBeans);
-            homeRecyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            homeRecyclerview.setAdapter(adapter);
-            if (liveBeans.size() < 10) {
-                adapter.setEnableLoadMore(false);
-            } else {
-                adapter.setEnableLoadMore(true);
-            }
+        if (liveBeans.size() < 10) {
+            adapter.loadMoreEnd();
+            adapter.loadMoreEnd(false);
         } else {
-            if (liveBeans.size() < 10) {
-                adapter.loadMoreEnd();
-            } else {
-                adapter.loadMoreComplete();
-            }
-            adapter.addData(liveBeans);
+            adapter.loadMoreComplete();
+            adapter.loadMoreEnd(true);
         }
+        adapter.addData(liveBeans);
     }
 
     @Override
     public void getLiveFailure(String message) {
+        adapter.setEmptyView(emptyView);
         ToastUtils.showShortToast(message);
+    }
+
+    private void restoreEmptyViewStatus(boolean isShowProgressBar) {
+        if (isShowProgressBar) {
+            refreshBtn.setVisibility(View.VISIBLE);
+            reasonView.setVisibility(View.INVISIBLE);
+            errorView.setVisibility(View.INVISIBLE);
+        } else {
+            refreshBtn.setVisibility(View.INVISIBLE);
+            reasonView.setVisibility(View.VISIBLE);
+            errorView.setVisibility(View.VISIBLE);
+        }
     }
 }

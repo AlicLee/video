@@ -1,6 +1,7 @@
 package com.example.lee.videoandroid.view.main.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -8,24 +9,26 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+
 import com.example.lee.videoandroid.R;
 import com.example.lee.videoandroid.model.LiveBean;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+
 public class HomeAdapter extends BaseQuickAdapter<LiveBean, HomeAdapter.HomeViewHolder> {
     RecyclerView view;
     Context mContext;
 
-    public HomeAdapter(Context context, int layoutId, List<LiveBean> data) {
+    public HomeAdapter(Context context, int layoutId) {
         super(layoutId);
         mContext = context;
     }
 
-
     @Override
     protected void convert(HomeViewHolder helper, LiveBean item) {
-
+//        helper.
     }
 
     public class HomeViewHolder extends BaseViewHolder {

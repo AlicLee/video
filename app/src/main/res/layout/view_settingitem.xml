@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/setting_item_icon"
+        android:layout_width="@dimen/hPic"
+        android:layout_height="@dimen/hPic"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/midMargin"
+        android:layout_marginStart="@dimen/midMargin" />
+
+    <TextView
+        android:id="@+id/setting_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/midMargin"
+        android:layout_marginStart="@dimen/midMargin"
+        android:layout_toEndOf="@+id/setting_item_icon"
+        android:layout_toRightOf="@+id/setting_item_icon"
+        android:text="测试文本" />
+
+    <ImageView
+        android:layout_width="@dimen/hPic"
+        android:layout_height="@dimen/hPic"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/chevron_right"
+        android:layout_marginEnd="@dimen/midMargin"
+        android:layout_marginRight="@dimen/midMargin" />
+
+    <View
+        android:id="@+id/setting_item_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/midMargin"
+        android:layout_marginStart="@dimen/midMargin"
+        android:background="@color/LightGray" />
+</RelativeLayout>

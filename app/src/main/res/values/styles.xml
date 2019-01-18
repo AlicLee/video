@@ -6,15 +6,63 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="textColorPrimary">@color/white</item>
+        <item name="android:actionBarStyle">@style/BarStyle</item>
+        <item name="actionBarStyle">@style/BarStyle</item>
+    </style>
+
+    <style name="AppNoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
     </style>
 
     <style name="error_appearance" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/red</item>
     </style>
 
+
+    <!-- 继承AppCompat.ActionBar，覆盖background，titleTextStyle -->
+    <style name="BarStyle" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="background">@color/colorPrimary</item>
+        <item name="actionOverflowButtonStyle">@style/MyActionBarOverflowButtonStyle</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionBarOverflowButtonStyle</item>
+        <item name="actionButtonStyle">@style/MyActionButtonStyle</item>
+        <item name="android:actionButtonStyle">@style/MyActionButtonStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/leftexit</item>
+        <item name="homeAsUpIndicator">@drawable/leftexit</item>
+    </style>
+
+    <!-- 继承AppCompat.Title，覆盖textColor -->
+    <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+    <style name="MyActionBarOverflowButtonStyle" parent="@style/Base.Widget.AppCompat.ActionButton.Overflow">
+        <item name="background">@color/white</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="MyActionButtonStyle" parent="@style/Base.Widget.AppCompat.ActionButton">
+        <item name="background">@color/white</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <!--<style name="MySubTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">-->
+    <!--<item name="textColor">@color/white</item>-->
+    <!--</style>-->
     <declare-styleable name="ArcHeaderView">
         <attr name="startColor">@color/lightBlue</attr>
         <attr name="endColor">@color/blue</attr>
     </declare-styleable>
+
+    <declare-styleable name="settingItem">
+        <!-- 滑动按钮背景图片 -->
+        <attr name="iconBg" format="reference" />
+        <!-- 滑动块图片 -->
+        <attr name="textName" format="string" />
+        <!-- 设置当前的状态 -->
+        <attr name="haveLine" format="boolean" />
+    </declare-styleable>
+
 </resources>

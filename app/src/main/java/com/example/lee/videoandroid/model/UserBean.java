@@ -7,13 +7,7 @@ public class UserBean {
     private String userName, userPhone, userEmail, userPassword;
     private Date userCreateTime, userBirthDay;
 
-    public UserBean(String userName, String userPhone, String userEmail, String userPassword, boolean sex) {
-        this.userName = userName;
-        this.userPhone = userPhone;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.sex = sex;
-    }
+
 
     private boolean sex;
 

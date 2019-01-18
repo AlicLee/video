@@ -1,11 +1,11 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'com.android.library'
 android {
-    compileSdkVersion 22
+    compileSdkVersion 27
     defaultConfig {
 //        applicationId "com.example.lee.livesdk"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -15,7 +15,7 @@ android {
 //            }
 //        }
         ndk {
-            abiFilters "arm64-v8a","armeabi-v7a"
+            abiFilters "armeabi-v7a"
         }
     }
     buildTypes {
@@ -39,11 +39,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libx264.libs', include: ['*.jar'])
     compile 'com.android.support:support-annotations:28.0.0'
-//    implementation 'com.android.support:appcompat-v7:22.0.0'
+//    implementation "com.android.support:appcompat-v7:$android_support_version"
+//    implementation "com.android.support:preference-v7:$android_support_version"
+//    implementation 'com.squareup:otto:1.3.8'
 //    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     // required, enough for most devices.
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
-    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+//    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+//    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+//    compile 'tv.danmaku.ijk.media:ijkplayer-arm64v8a:0.8.8'
+//    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
+
 //    //Other ABIs: optional
 //    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
 //    compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'

@@ -34,7 +34,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         api= (Api) HttpUtils.getInstance().createRequest(Api.class);
-        mPresenter= TUtil.getT(this,1);
+        mPresenter= TUtil.getT(this,0);
         mContext=getActivity();
         if(mPresenter!=null){
             mPresenter.api=api;

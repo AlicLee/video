@@ -3,35 +3,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.example.lee.livesdk.SrsCameraView
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
     <RelativeLayout
+        android:id="@+id/push_title_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_layout_height"
+        android:visibility="invisible"
         android:background="@drawable/push_title_bg">
 
+        <ImageView
+            android:id="@+id/left_btn"
+            android:layout_width="@dimen/xhPic"
+            android:layout_height="@dimen/xhPic"
+            android:layout_marginLeft="@dimen/minMargin"
+            android:layout_marginStart="@dimen/minMargin"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/leftexit" />
+
+        <TextView
+            android:id="@+id/push_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/bigMargin"
+            android:layout_marginStart="@dimen/midMargin"
+            android:layout_toEndOf="@+id/left_btn"
+            android:layout_toRightOf="@+id/left_btn"
+            android:singleLine="true" />
+
+        <!--<ImageView-->
+        <!--android:id="@+id/settings"-->
+        <!--android:layout_width="@dimen/xhPic"-->
+        <!--android:layout_height="@dimen/xhPic"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginEnd="@dimen/minMargin"-->
+        <!--android:layout_marginRight="@dimen/minMargin"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@drawable/settings" />-->
+        <ImageView
+            android:id="@+id/phone_orientation"
+            android:layout_width="@dimen/xhPic"
+            android:layout_height="@dimen/xhPic"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/minMargin"
+            android:layout_marginRight="@dimen/minMargin"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/screen_rotation" />
+
+        <ImageView
+            android:id="@+id/switch_camera"
+            android:layout_width="@dimen/xhPic"
+            android:layout_height="@dimen/xhPic"
+            android:layout_marginEnd="@dimen/midMargin"
+            android:layout_marginRight="@dimen/midMargin"
+            android:layout_toLeftOf="@+id/phone_orientation"
+            android:layout_toStartOf="@+id/phone_orientation"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/switch_camera" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/push_bottom_bg"
+        android:id="@+id/push_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_layout_height"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:background="@drawable/push_bottom_bg">
 
-        <Button
+        <ImageView
             android:id="@+id/push_pause_btn"
             android:layout_width="@dimen/xhPic"
             android:layout_height="@dimen/xhPic"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/minMargin"
             android:layout_marginStart="@dimen/minMargin"
-            android:background="@drawable/play" />
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/play" />
 
-        <Button
+        <!--<ImageView
             android:id="@+id/push_refresh"
-            android:layout_width="@dimen/hPic"
-            android:layout_height="@dimen/hPic"
+            android:layout_width="@dimen/xhPic"
+            android:layout_height="@dimen/xhPic"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/minMargin"
             android:layout_marginStart="@dimen/minMargin"
-            android:background="@drawable/reloade"/>
+            android:layout_toEndOf="@+id/push_pause_btn"
+            android:layout_toRightOf="@+id/push_pause_btn"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/reloade" />-->
     </RelativeLayout>
+
+
 </RelativeLayout>

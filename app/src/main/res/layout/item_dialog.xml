@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:counterEnabled="true"
         app:counterMaxLength="15"
-        app:counterTextAppearance="@style/error_appearance">
+        >
 
         <EditText
             android:id="@+id/dialog_ev"

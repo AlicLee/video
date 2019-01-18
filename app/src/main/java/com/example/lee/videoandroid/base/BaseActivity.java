@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.lee.videoandroid.network.Api;
 import com.example.lee.videoandroid.network.HttpUtils;
@@ -42,6 +43,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public abstract void initView();
 
     public abstract void initData();
+
 
     @Override
     protected void onStart() {

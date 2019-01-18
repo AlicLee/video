@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -17,7 +18,6 @@ import com.example.lee.videoandroid.base.BaseActivity;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-
     @BindView(R.id.fragment_container)
     FrameLayout fragmentContainer;
     @BindView(R.id.lineView)
@@ -41,6 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private VideoFragment videoFragment = new VideoFragment();
     private TextView[] bottomTvList;
     private Fragment[] fragmentList;
+    private String[] fragmentTitleNameList = new String[]{"推荐", "视频", "我的"};
     private Button[] bottomButtonList;
     private int fragmentStatusTag = 0;
     //    private final int[] bottomUnCheckImgList=new int[]{};
@@ -72,17 +73,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void showFragment(int fragmentStatusTag) {
         final FragmentTransaction transaction = manager.beginTransaction();
+        //遍历fragment去
         for (int i = 0; i < fragmentList.length; i++) {
             if (i != fragmentStatusTag) {
                 transaction.hide(fragmentList[i]);
                 bottomTvList[i].setTextColor(getResources().getColor(R.color.Silver));
 //                bottomButtonList[i].setBackground();
             } else {
+
                 if (!fragmentList[i].isAdded()) {
                     transaction.add(fragmentContainer.getId(), fragmentList[i]);
                 }
                 transaction.show(fragmentList[i]);
                 bottomTvList[i].setTextColor(getResources().getColor(R.color.blue));
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar == null)
+                    return;
+                actionBar.setTitle(fragmentTitleNameList[i]);
             }
         }
         transaction.commit();

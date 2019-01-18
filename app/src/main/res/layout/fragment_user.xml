@@ -1,6 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/Gainsboro">
 
+    <RelativeLayout
+        android:id="@+id/user_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/user_head_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/user_head_default" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/user_head_icon">
+
+            <TextView
+                android:id="@+id/user_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/midMargin"
+                android:layout_marginRight="@dimen/midMargin"
+                android:layout_toLeftOf="@+id/user_lineView"
+                android:layout_toStartOf="@+id/user_lineView"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/user_lineView"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/user_unLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/user_phone_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/midMargin"
+                android:layout_marginStart="@dimen/midMargin"
+                android:layout_toEndOf="@+id/user_lineView"
+                android:layout_toRightOf="@+id/user_lineView"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.example.lee.videoandroid.widget.SettingItemLayout
+        android:id="@+id/user_collection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_title_layout"
+        app:haveLine="true"
+        app:iconBg="@drawable/collection_video"
+        app:textName="我的收藏" />
+
+    <com.example.lee.videoandroid.widget.SettingItemLayout
+        android:id="@+id/user_download"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_collection"
+        app:haveLine="true"
+        app:iconBg="@drawable/offline_video"
+        app:textName="我的离线" />
+
+    <com.example.lee.videoandroid.widget.SettingItemLayout
+        android:id="@+id/user_recent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_download"
+        app:haveLine="false"
+        app:iconBg="@drawable/play_history"
+        app:textName="最近播放" />
+
+    <com.example.lee.videoandroid.widget.SettingItemLayout
+        android:id="@+id/user_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_recent"
+        android:layout_marginTop="@dimen/bigMargin"
+        app:haveLine="true"
+        app:iconBg="@drawable/update"
+        app:textName="版本更新" />
+
+    <com.example.lee.videoandroid.widget.SettingItemLayout
+        android:id="@+id/user_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_update"
+        app:haveLine="false"
+        app:iconBg="@drawable/about"
+        app:textName="关于软件" />
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.lee.videoandroid.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -26,7 +27,6 @@ public class SharedPreUtil {
      * @return
      */
     public static boolean getBoolean(Context context, String key, boolean defValue) {
-
         return getSP(context).getBoolean(key, defValue);
     }
 
@@ -34,7 +34,7 @@ public class SharedPreUtil {
      * 保存boolean变量
      */
     public static void saveBoolean(Context context, String key, boolean value) {
-        getSP(context).edit().putBoolean(key, value).commit();
+        getSP(context).edit().putBoolean(key, value).apply();
     }
 
     /**
@@ -53,7 +53,8 @@ public class SharedPreUtil {
      * 保存字符串变量
      */
     public static void saveString(Context context, String key, String value) {
-        getSP(context).edit().putString(key, value).commit();
+        SharedPreferences.Editor editor = getSP(context).edit();
+        editor.putString(key, value).apply();
     }
 
     /**
@@ -73,7 +74,8 @@ public class SharedPreUtil {
      * 保存整型变量
      */
     public static void saveInt(Context context, String key, int value) {
-        getSP(context).edit().putInt(key, value).commit();
+
+        getSP(context).edit().putInt(key, value).apply();
     }
 
     /**
@@ -92,7 +94,7 @@ public class SharedPreUtil {
      * 保存Long变量
      */
     public static void saveLong(Context context, String key, long value) {
-        getSP(context).edit().putLong(key, value).commit();
+        getSP(context).edit().putLong(key, value).apply();
     }
 
     /**
@@ -111,8 +113,7 @@ public class SharedPreUtil {
         //转换成json数据，再保存
         String strJson = gson.toJson(datalist);
         editor.putString(tag, strJson);
-        editor.commit();
-
+        editor.apply();
     }
 
     /**
@@ -164,13 +165,13 @@ public class SharedPreUtil {
         if (sp == null) {
             synchronized (SharedPreUtil.class) {
                 if (sp == null) {
-                    context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+                    sp = PreferenceManager.getDefaultSharedPreferences(context);
+//                    context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
                 }
             }
 
         }
         return sp;
     }
-
 
 }

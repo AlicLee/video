@@ -12,12 +12,13 @@ import com.google.gson.Gson;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 
 public class RegisterPresenter extends BasePresenter<RegisterActivity> implements RegisterContact.Presenter {
     @Override
     public void register(UserBean userBean) {
         RequestBody body = RequestBody.create(MediaType.parse(HttpUtils.JSON_CONTENT_TYPE), new Gson().toJson(userBean));
-        HttpPresenter.getInstance().setContext(mContext).setObservable(api.register(body)).setCallBack(new HttpTaskListener() {
+        HttpPresenter.getInstance().setContext(mContext).setCallBack(new HttpTaskListener() {
             @Override
             public void onSuccess(Object o) {
                 UserBean registerBean = new Gson().fromJson(o.toString(), UserBean.class);
@@ -28,6 +29,6 @@ public class RegisterPresenter extends BasePresenter<RegisterActivity> implement
             public void onError(String message) {
                 mView.registerFailure(message);
             }
-        });
+        }).create(api.register(body));
     }
 }

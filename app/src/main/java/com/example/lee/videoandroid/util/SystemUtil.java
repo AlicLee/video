@@ -21,6 +21,8 @@ public class SystemUtil {
      */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager==null)
+            return true;
         NetworkInfo wifiInfo = connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return wifiInfo != null;
@@ -30,6 +32,8 @@ public class SystemUtil {
      */
     public static boolean isMobileNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager==null)
+            return true;
         NetworkInfo mobileNetworkInfo = connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         return mobileNetworkInfo != null;
@@ -39,6 +43,8 @@ public class SystemUtil {
      */
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager==null)
+            return true;
         return connectivityManager.getActiveNetworkInfo() != null;
     }
 
