@@ -1,5 +1,7 @@
 package com.example.lee.videoandroid.util;
 
+import android.util.LruCache;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -7,7 +9,6 @@ import java.lang.reflect.Type;
  * 类转换初始化
  */
 public class TUtil {
-
     public static <T> T getT(Object o, int paramIndex) {
         try {
             return ((Class<T>) ((ParameterizedType) (o.getClass()

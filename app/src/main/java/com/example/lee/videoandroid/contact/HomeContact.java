@@ -7,12 +7,24 @@ import java.util.List;
 
 public interface HomeContact {
     public interface View {
-        public void getLiveSuccess(List<LiveBean> liveBeans);
+        public void loadMoreSuccess(List<LiveBean> liveBeans);
 
-        public void getLiveFailure(String message);
+        public void loadMoreFailure(String message);
+
+        public void refreshSuccess(List<LiveBean> liveBeans);
+
+        public void refreshFailure(String message);
+
+        public void getLiveByPagesSuccess(List<LiveBean> liveBeans);
+
+        public void getLiveByPagesFailure(String message);
     }
 
     public interface Presenter {
-        public void getLiveByPages(int index,int pageSize);
+        public void loadMore(int index, int pageSize);
+
+        public void refresh(int index, int pageSize);
+
+        public void getLiveByPages(int index, int pageSize);
     }
 }

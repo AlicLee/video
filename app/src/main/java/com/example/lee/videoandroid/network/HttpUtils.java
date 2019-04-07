@@ -48,10 +48,10 @@ public class HttpUtils<T> {
 
     private OkHttpClient getOkClient() {
         return new OkHttpClient().newBuilder()
-                .readTimeout(20, TimeUnit.SECONDS)
-                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true)
-                .writeTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
                 .addInterceptor(new LoggingInterceptor())
                 .build();
     }
@@ -86,7 +86,6 @@ public class HttpUtils<T> {
             customHttpMaps.put(baseUrl, getBuilder(baseUrl).build().create(a));
         }
         return (T) customHttpMaps.get(baseUrl);
-
     }
 
     /**

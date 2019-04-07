@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Gainsboro">
+    android:background="@color/whiteSmoke">
 
     <RelativeLayout
         android:id="@+id/user_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:background="@drawable/user_bg">
 
         <ImageView
             android:id="@+id/user_head_icon"
@@ -30,6 +31,7 @@
                 android:layout_marginRight="@dimen/midMargin"
                 android:layout_toLeftOf="@+id/user_lineView"
                 android:layout_toStartOf="@+id/user_lineView"
+                android:layout_centerVertical="true"
                 android:textColor="@color/white" />
 
             <TextView
@@ -55,43 +57,43 @@
                 android:layout_marginStart="@dimen/midMargin"
                 android:layout_toEndOf="@+id/user_lineView"
                 android:layout_toRightOf="@+id/user_lineView"
+                android:layout_centerVertical="true"
                 android:textColor="@color/white" />
         </RelativeLayout>
     </RelativeLayout>
 
-    <com.example.lee.videoandroid.widget.SettingItemLayout
-        android:id="@+id/user_collection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user_title_layout"
-        app:haveLine="true"
-        app:iconBg="@drawable/collection_video"
-        app:textName="我的收藏" />
+    <!--<com.example.lee.videoandroid.widget.SettingItemLayout-->
+        <!--android:id="@+id/user_collection"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/user_title_layout"-->
+        <!--app:haveLine="true"-->
+        <!--app:iconBg="@drawable/collection_video"-->
+        <!--app:textName="我的收藏" />-->
 
-    <com.example.lee.videoandroid.widget.SettingItemLayout
-        android:id="@+id/user_download"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user_collection"
-        app:haveLine="true"
-        app:iconBg="@drawable/offline_video"
-        app:textName="我的离线" />
+    <!--<com.example.lee.videoandroid.widget.SettingItemLayout-->
+        <!--android:id="@+id/user_download"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/user_collection"-->
+        <!--app:haveLine="true"-->
+        <!--app:iconBg="@drawable/offline_video"-->
+        <!--app:textName="我的离线" />-->
 
-    <com.example.lee.videoandroid.widget.SettingItemLayout
-        android:id="@+id/user_recent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user_download"
-        app:haveLine="false"
-        app:iconBg="@drawable/play_history"
-        app:textName="最近播放" />
+    <!--<com.example.lee.videoandroid.widget.SettingItemLayout-->
+        <!--android:id="@+id/user_recent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/user_download"-->
+        <!--app:haveLine="false"-->
+        <!--app:iconBg="@drawable/play_history"-->
+        <!--app:textName="最近播放" />-->
 
     <com.example.lee.videoandroid.widget.SettingItemLayout
         android:id="@+id/user_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_recent"
-        android:layout_marginTop="@dimen/bigMargin"
+        android:layout_below="@+id/user_title_layout"
         app:haveLine="true"
         app:iconBg="@drawable/update"
         app:textName="版本更新" />

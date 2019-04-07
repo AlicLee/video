@@ -4,19 +4,18 @@ import java.util.Date;
 
 public class UserBean {
     private int id, userAge;
-    private String userName, userPhone, userEmail, userPassword;
-    private Date userCreateTime, userBirthDay;
+    private String userName, userPhone, userEmail, userPassword, userIcon;
+    private String userCreateTime, userBirthDay;
 
 
-
-    private boolean sex;
+    private boolean userSex;
 
     public boolean isSex() {
-        return sex;
+        return userSex;
     }
 
     public void setSex(boolean sex) {
-        this.sex = sex;
+        this.userSex = sex;
     }
 
     public int getId() {
@@ -67,19 +66,27 @@ public class UserBean {
         this.userPassword = userPassword;
     }
 
-    public Date getUserCreateTime() {
+    public String getUserCreateTime() {
         return userCreateTime;
     }
 
-    public void setUserCreateTime(Date userCreateTime) {
+    public void setUserCreateTime(String userCreateTime) {
         this.userCreateTime = userCreateTime;
     }
 
-    public Date getUserBirthDay() {
+    public String getUserBirthDay() {
         return userBirthDay;
     }
 
-    public void setUserBirthDay(Date userBirthDay) {
+    public void setUserBirthDay(String userBirthDay) {
         this.userBirthDay = userBirthDay;
+    }
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
     }
 }

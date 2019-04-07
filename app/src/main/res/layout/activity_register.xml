@@ -36,7 +36,8 @@
         app:counterEnabled="true"
         app:counterMaxLength="15"
         app:errorEnabled="false"
-        app:errorTextAppearance="@color/red">
+        app:errorTextAppearance="@color/red"
+        >
 
         <EditText
             android:id="@+id/password_ev"

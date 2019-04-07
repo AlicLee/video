@@ -31,6 +31,8 @@ public class HttpPresenter<T> implements HttpBuilder<T> {
     private Context mContex;
     private boolean isAddCommonSubScription = true;//是否加入公共生命周期管理
     private boolean isShowDialog = true;
+    private Call<BaseResponse> call;
+    private Observable<BaseResponse> observable;
 
     private static class HttpPresenterBuilder {
         private final static HttpPresenter instance = new HttpPresenter();
@@ -129,6 +131,7 @@ public class HttpPresenter<T> implements HttpBuilder<T> {
         if (mContex != null && isShowDialog) {
             HttpUtils.getInstance().showProgressBar(mContex);
         }
+        this.call = call;
         call.enqueue(new Callback<T>() {
             @Override
             public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
@@ -139,18 +142,17 @@ public class HttpPresenter<T> implements HttpBuilder<T> {
                         listener.onError(response.message());
                     }
                 }
-                mContex=null;
+                mContex = null;
             }
 
             @Override
             public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
                 listener.onError(t.getMessage());
-                mContex=null;
+                mContex = null;
             }
         });
         return this;
     }
-
 
     @Override
     public HttpBuilder setCallBack(HttpTaskListener<T> listener) {

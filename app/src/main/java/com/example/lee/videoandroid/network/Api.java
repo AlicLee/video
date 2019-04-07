@@ -22,8 +22,13 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 public interface Api {
-    public String HOST = "http://192.168.103.111:8081/";
-    public String userModule = "/user", liveModule = "/live";
+
+    public String HOST = "http://192.168.199.170:8081/videoHttp/";
+    //    public String HOST = "http://192.168.103.111:8081/videoHttp/";
+    public String userModule = "user", liveModule = "live", videoModule = "video";
+    public String FILE_HOST = "http://192.168.199.170:8081/";
+    //    public String FILE_HOST = "http://192.168.103.111:8081/";
+
 
     /**
      *
@@ -44,7 +49,24 @@ public interface Api {
     Observable<BaseResponse> updateOrInsert(@Body RequestBody body);
 
     @Multipart
-    @POST("/upload")
+    @POST("upload")
     Call<BaseResponse> upload(@Part MultipartBody.Part multipart);
 
+
+    @Multipart
+    @POST("/uploadFile")
+    Observable<BaseResponse> uploadFile(@Part MultipartBody.Part file);
+
+    @POST(userModule + "/updateUserInfo")
+    Observable<BaseResponse> updateUser(@Body RequestBody userMessage);
+
+    @POST(videoModule + "/getVideoByPages")
+    Observable<BaseResponse> getVideoByPages(@Query("pageIndex") int pageIndex, @Query("pageSize") int pageSize);
+
+    @Multipart
+    @POST("uploadVideo")
+    Call<BaseResponse> uploadVideo(@Part MultipartBody.Part multipart);
+
+    @POST(videoModule + "/insertVideo")
+    Observable<BaseResponse> insertVideo(@Body RequestBody body);
 }

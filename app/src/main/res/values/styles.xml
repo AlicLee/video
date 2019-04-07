@@ -19,6 +19,7 @@
     </style>
 
 
+
     <!-- 继承AppCompat.ActionBar，覆盖background，titleTextStyle -->
     <style name="BarStyle" parent="@style/Widget.AppCompat.Light.ActionBar">
         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
@@ -65,4 +66,37 @@
         <attr name="haveLine" format="boolean" />
     </declare-styleable>
 
+    <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 浮于Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- Dialog以外的区域模糊效果 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Dialog进入及退出动画 -->
+        <item name="android:windowAnimationStyle">@style/style_inner_map_dialog_animation</item>
+    </style>
+
+    <style name="style_inner_map_dialog_animation">
+        <!--dialog的进出动画-->
+        <item name="android:windowEnterAnimation">@anim/scale_alpha_to_enter</item>
+        <item name="android:windowExitAnimation">@anim/scale_alpha_to_exit</item>
+    </style>
+
+    <declare-styleable name="LinearProgressView">
+        <attr name="lp_paintWidth" format="dimension" />
+        <attr name="lp_paintColor" format="color" />
+        <attr name="lp_textSize" format="dimension" />
+        <attr name="lp_bgPaintSize" format="dimension" />
+        <attr name="lp_type" format="integer" />
+        <attr name="lp_startColor" format="color" />
+        <attr name="lp_endColor" format="color" />
+    </declare-styleable>
 </resources>

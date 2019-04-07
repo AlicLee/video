@@ -1,13 +1,18 @@
 package com.example.lee.videoandroid.view.push;
 
+import android.Manifest;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.Camera;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lee.livesdk.SrsCameraView;
 import com.example.lee.livesdk.SrsEncodeHandler;
@@ -18,6 +23,7 @@ import com.example.lee.videoandroid.R;
 import com.example.lee.videoandroid.base.BaseActivity;
 import com.example.lee.videoandroid.base.Settings;
 import com.example.lee.videoandroid.model.UserBean;
+import com.example.lee.videoandroid.util.PermissionUtils;
 import com.example.lee.videoandroid.util.SharedPreUtil;
 import com.example.lee.videoandroid.util.ToastUtils;
 import com.github.faucamp.simplertmp.RtmpHandler;
@@ -30,6 +36,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 
 public class PushActivity extends BaseActivity {
     @BindView(R.id.left_btn)
@@ -51,8 +58,9 @@ public class PushActivity extends BaseActivity {
     ImageView phoneOrientation;
     @BindView(R.id.switch_camera)
     ImageView switchCamera;
-
-    private String rtmpUrl = "rtmp://192.168.103.111:1935/live/";
+    public String RTMP_URL = "rtmp://192.168.103.111:1935/live/";
+    //        private String rtmpUrl = "rtmp://192.168.103.111:1935/live/";
+//    private String rtmpUrl = "rtmp://192.168.199.170:1935/live/";
     private SrsPublisher mPublisher;
     private boolean isStartPush = false;
     private int control_view_delay = 5000;
@@ -73,13 +81,25 @@ public class PushActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        PermissionUtils.getInstance().checkPermissions(this, new String[]{Manifest.permission.CAMERA}, new PermissionUtils.IPermissionsResult() {
+            @Override
+            public void passPermissons() {
+
+            }
+
+            @Override
+            public void forbitPermissons() {
+                ToastUtils.showShortToast("您必须允许摄像头权限才可以继续");
+                finish();
+            }
+        });
         String userBeanString = SharedPreUtil.getString(this, Settings.SharedPreUserKey, "");
         if (userBeanString.length() == 0) {
             ToastUtils.showShortToast("用户未登陆");
             return;
         }
         UserBean userBean = new Gson().fromJson(userBeanString, UserBean.class);
-        rtmpUrl = rtmpUrl + userBean.getId() + "/test";
+        RTMP_URL = RTMP_URL + "test?id=" + userBean.getId();
         mPublisher = new SrsPublisher((SrsCameraView) findViewById(R.id.preview));
         mPublisher.setEncodeHandler(new SrsEncodeHandler(new SrsHandlerListener() {
             @Override
@@ -100,32 +120,34 @@ public class PushActivity extends BaseActivity {
         mPublisher.setRtmpHandler(new RtmpHandler(new RtmpHandler.RtmpListener() {
             @Override
             public void onRtmpConnecting(String msg) {
-
+                ToastUtils.showShortToast("正在连接" + msg);
+                Log.e(TAG, "onRtmpConnected: " + msg);
             }
 
             @Override
             public void onRtmpConnected(String msg) {
-
+                ToastUtils.showShortToast("已经连接");
+                Log.e(TAG, "onRtmpConnected: " + msg);
             }
 
             @Override
             public void onRtmpVideoStreaming() {
-
+                Log.e(TAG, "onRtmpVideoStreaming: ");
             }
 
             @Override
             public void onRtmpAudioStreaming() {
-
+                Log.e(TAG, "onRtmpAudioStreaming: ");
             }
 
             @Override
             public void onRtmpStopped() {
-
+                Log.e(TAG, "onRtmpStopped: ");
             }
 
             @Override
             public void onRtmpDisconnected() {
-
+                Log.e(TAG, "onRtmpDisconnected: ");
             }
 
             @Override
@@ -145,22 +167,22 @@ public class PushActivity extends BaseActivity {
 
             @Override
             public void onRtmpSocketException(SocketException e) {
-
+                Log.e(TAG, "onRtmpSocketException: ");
             }
 
             @Override
             public void onRtmpIOException(IOException e) {
-
+                Log.e(TAG, "onRtmpIOException: ");
             }
 
             @Override
             public void onRtmpIllegalArgumentException(IllegalArgumentException e) {
-
+                Log.e(TAG, "onRtmpIllegalArgumentException: ");
             }
 
             @Override
             public void onRtmpIllegalStateException(IllegalStateException e) {
-
+                Log.e(TAG, "onRtmpIllegalStateException: ");
             }
         }));
         mPublisher.setRecordHandler(new SrsRecordHandler(new SrsRecordHandler.SrsRecordListener() {
@@ -220,7 +242,8 @@ public class PushActivity extends BaseActivity {
     }
 
     public void startPush() {
-        mPublisher.startPublish(rtmpUrl);
+//        rtmpUrl = rtmpUrl + "&orientation=" + this.getResources().getConfiguration().orientation;
+        mPublisher.startPublish(RTMP_URL);
         mPublisher.startCamera();
         pushPauseBtn.setImageResource(R.drawable.pause);
         phoneOrientation.setVisibility(View.INVISIBLE);
@@ -236,15 +259,21 @@ public class PushActivity extends BaseActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionUtils.getInstance().onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        mPublisher.resumeRecord();
+//        mPublisher.resumeRecord();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mPublisher.pauseRecord();
+//        mPublisher.pauseRecord();
     }
 
     @Override
@@ -276,7 +305,7 @@ public class PushActivity extends BaseActivity {
                 break;
             case R.id.preview:
                 if (control_view_timer == null) {
-                    setControlViewVisible(View.VISIBLE);
+                    setControlViewVisible(true);
                     startDissmissControlView();
                 }
                 break;
@@ -305,9 +334,14 @@ public class PushActivity extends BaseActivity {
         }
     }
 
-    public void setControlViewVisible(int visibleIndex) {
-        pushBottomLayout.setVisibility(visibleIndex);
-        pushTitleLayout.setVisibility(visibleIndex);
+    public void setControlViewVisible(boolean isShowControlView) {
+        if (isShowControlView) {
+            pushBottomLayout.setVisibility(View.VISIBLE);
+            pushTitleLayout.setVisibility(View.VISIBLE);
+        } else {
+            pushBottomLayout.setVisibility(View.GONE);
+            pushTitleLayout.setVisibility(View.GONE);
+        }
     }
 
 
@@ -318,7 +352,7 @@ public class PushActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    setControlViewVisible(View.INVISIBLE);
+                    setControlViewVisible(false);
                     cancelDissmissControlView();
                 }
             });

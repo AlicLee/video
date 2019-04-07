@@ -45,7 +45,6 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
     private final AndroidMediaPlayerListenerHolder mInternalListenerAdapter;
     private String mDataSource;
     private MediaDataSource mMediaDataSource;
-
     private final Object mInitLock = new Object();
     private boolean mIsReleased;
 
@@ -111,7 +110,6 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
             mInternalMediaPlayer.setDataSource(path);
         }
     }
-
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void setDataSource(IMediaDataSource mediaDataSource) {

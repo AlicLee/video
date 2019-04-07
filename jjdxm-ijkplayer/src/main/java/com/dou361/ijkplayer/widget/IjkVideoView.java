@@ -441,12 +441,14 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             mCurrentBufferPercentage = 0;
             String scheme = mUri.getScheme();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                    usingAndroidPlayer &&
-                    (TextUtils.isEmpty(scheme) || scheme.equalsIgnoreCase("file"))) {
-                IMediaDataSource dataSource = new FileMediaDataSource(new File(mUri.toString()));
-                mMediaPlayer.setDataSource(dataSource);
-            } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            //todo if Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+//                    usingAndroidPlayer &&
+//                    (TextUtils.isEmpty(scheme) || scheme.equalsIgnoreCase("file"))) {
+//                IMediaDataSource dataSource = new FileMediaDataSource(new File(mUri.toString()));
+//                mMediaPlayer.setDataSource(dataSource);
+//            } else
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 mMediaPlayer.setDataSource(mAppContext, mUri, mHeaders);
             } else {
                 mMediaPlayer.setDataSource(mUri.toString());
@@ -680,9 +682,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                 .setPositiveButton("error",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                            /* If we get here, there is no onError listener, so
-                                             * at least inform them that the video is over.
-                                             */
+                                                /* If we get here, there is no onError listener, so
+                                                 * at least inform them that the video is over.
+                                                 */
                                                 if (mOnCompletionListener != null) {
                                                     mOnCompletionListener.onCompletion(mMediaPlayer);
                                                 }

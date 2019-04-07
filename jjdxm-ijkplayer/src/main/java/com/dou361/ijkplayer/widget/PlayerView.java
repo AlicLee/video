@@ -398,10 +398,12 @@ public class PlayerView {
             if (v.getId() == R.id.app_video_menu) {
                 /**菜单*/
                 showMenu();
-            } else if (v.getId() == R.id.app_video_stream) {
+            }
+            else if (v.getId() == R.id.app_video_stream) {
                 /**选择分辨率*/
                 showStreamSelectView();
-            } else if (v.getId() == R.id.ijk_iv_rotation) {
+            }
+            else if (v.getId() == R.id.ijk_iv_rotation) {
                 /**旋转视频方向*/
                 setPlayerRotation();
             } else if (v.getId() == R.id.app_video_fullscreen) {
@@ -664,7 +666,6 @@ public class PlayerView {
             tv_speed = (TextView) rootView.findViewById(R.id.app_video_speed);
             seekBar = (SeekBar) rootView.findViewById(R.id.app_video_seekBar);
         }
-
         seekBar.setMax(1000);
         seekBar.setOnSeekBarChangeListener(mSeekListener);
         iv_bar_player.setOnClickListener(onClickListener);
@@ -717,7 +718,6 @@ public class PlayerView {
                 startPlay();
             }
         });
-
         final GestureDetector gestureDetector = new GestureDetector(mContext, new PlayerGestureListener());
         rl_box.setClickable(true);
         rl_box.setOnTouchListener(new View.OnTouchListener() {
@@ -850,10 +850,10 @@ public class PlayerView {
      * }
      */
     public boolean onBackPressed() {
-        if (!isOnlyFullScreen && getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            return true;
-        }
+//        if (!isOnlyFullScreen && getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+//            mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//            return true;
+//        }
         return false;
     }
 
@@ -1026,7 +1026,6 @@ public class PlayerView {
         } else {
             if (isCharge && maxPlaytime < getCurrentPosition()) {
                 query.id(R.id.app_video_freeTie).visible();
-
             } else {
                 if (playerSupport) {
                     query.id(R.id.app_video_loading).visible();

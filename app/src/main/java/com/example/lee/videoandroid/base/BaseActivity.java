@@ -1,6 +1,7 @@
 package com.example.lee.videoandroid.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +76,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mPresenter.onDestory();
         }
         super.onDestroy();
+    }
+
+    /**
+     * Use:Log.e(getLogTag(this),"123");
+     * @param context instance
+     * @return the name of instance
+     */
+    protected String getLogTag(Context context) {
+        return context.getClass().getSimpleName();
     }
 
     /**

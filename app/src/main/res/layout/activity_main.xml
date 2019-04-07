@@ -22,21 +22,26 @@
     <LinearLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/bottom_home_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:clickable="true"
+            android:layout_weight="1"
+            android:focusable="true">
 
             <Button
                 android:id="@+id/bottom_home_btn"
-                android:layout_width="@dimen/xhPic"
-                android:layout_height="@dimen/xhPic"
+                android:layout_width="@dimen/hPic"
+                android:layout_height="@dimen/hPic"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/minMargin" />
+                android:layout_marginTop="@dimen/minMargin"
+                android:background="@drawable/home_outline" />
 
             <TextView
                 android:id="@+id/bottom_home_tv"
@@ -44,23 +49,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bottom_home_btn"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/minMargin"
+                android:layout_marginTop="2dp"
                 android:text="@string/bottom_home_tv"
-                android:textColor="@color/Silver"
+                android:textColor="@color/Gainsboro"
                 android:textSize="@dimen/minSp" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/bottom_video_layout"
             android:layout_width="0dp"
+            android:clickable="true"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:focusable="true">
 
             <Button
                 android:id="@+id/bottom_video_btn"
-                android:layout_width="@dimen/xhPic"
-                android:layout_height="@dimen/xhPic"
+                android:layout_width="@dimen/hPic"
+                android:layout_height="@dimen/hPic"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/minMargin" />
+                android:layout_marginTop="@dimen/minMargin"
+                android:background="@drawable/video_outline" />
 
             <TextView
                 android:id="@+id/bottom_video_tv"
@@ -68,23 +77,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bottom_video_btn"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/minMargin"
+                android:layout_marginTop="2dp"
                 android:text="@string/bottom_video_tv"
-                android:textColor="@color/Silver"
+                android:textColor="@color/Gainsboro"
                 android:textSize="@dimen/minSp" />
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/bottom_person_layout"
             android:layout_width="0dp"
+            android:clickable="true"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:focusable="true">
 
             <Button
                 android:id="@+id/bottom_user_btn"
-                android:layout_width="@dimen/xhPic"
-                android:layout_height="@dimen/xhPic"
+                android:layout_width="@dimen/hPic"
+                android:layout_height="@dimen/hPic"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/minMargin" />
+                android:layout_marginTop="@dimen/minMargin"
+                android:background="@drawable/person_outline" />
 
             <TextView
                 android:id="@+id/bottom_user_tv"
@@ -92,9 +105,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bottom_user_btn"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/minMargin"
+                android:layout_marginTop="2dp"
                 android:text="@string/bottom_user_tv"
-                android:textColor="@color/Silver"
+                android:textColor="@color/Gainsboro"
                 android:textSize="@dimen/minSp" />
         </RelativeLayout>
     </LinearLayout>

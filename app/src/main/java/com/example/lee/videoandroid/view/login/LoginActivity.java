@@ -1,5 +1,6 @@
 package com.example.lee.videoandroid.view.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -36,7 +37,6 @@ import okhttp3.RequestBody;
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContact.View {
 
     public final int REQUEST_LOGIN = 1;
-
     @BindView(R.id.nickName_ev)
     EditText nickNameEv;
     @BindView(R.id.nickName_inputLayout)
@@ -49,7 +49,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     Button loginBtn;
     @BindView(R.id.register_btn)
     Button registerBtn;
-
     @Override
     public int setLayoutView() {
         return R.layout.activity_login;
@@ -92,6 +91,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         if (actionBar == null)
             return;
         actionBar.setTitle(R.string.login_tv);
+        getIntent();
     }
 
     @Override
@@ -103,6 +103,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void loginSuccess(UserBean userBean) {
         SharedPreUtil.saveString(this, Settings.SharedPreUserKey, new Gson().toJson(userBean));
+        Intent sourceIntent = getIntent();
+        String source = sourceIntent.getStringExtra("source");
+        if (source != null && source.equals("user")) {
+            sourceIntent.putExtra("userLoginData", new Gson().toJson(userBean));
+            setResult(RESULT_OK, sourceIntent);
+            finish();
+            return;
+        }
         Intent intent = new Intent(LoginActivity.this, PreparePushActivity.class);
         startActivity(intent);
     }

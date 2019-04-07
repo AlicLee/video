@@ -1,18 +1,28 @@
 package com.example.lee.livesdk;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.example.lee.opengles.GPUImageFilter;
 import com.example.lee.opengles.OpenGLUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -25,7 +35,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by Leo Ma on 2016/2/25.
  */
-public class SrsCameraView extends GLSurfaceView implements GLSurfaceView.Renderer {
+public class SrsCameraView extends GLSurfaceView implements GLSurfaceView.Renderer, Camera.AutoFocusCallback {
 
     private GPUImageFilter magicFilter;
     private SurfaceTexture surfaceTexture;
@@ -52,13 +62,19 @@ public class SrsCameraView extends GLSurfaceView implements GLSurfaceView.Render
     private ConcurrentLinkedQueue<IntBuffer> mGLIntBufferCache = new ConcurrentLinkedQueue<>();
     private PreviewCallback mPrevCb;
 
+
+    public static final int STATUS_NONE = 0;
+    public static final int STATUS_STATIC = 1;
+    public static final int STATUS_MOVE = 2;
+    private int STATUE = STATUS_NONE;
+    public static final int DELEY_DURATION = 500;
+
     public SrsCameraView(Context context) {
         this(context, null);
     }
 
     public SrsCameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         setEGLContextClientVersion(2);
         setRenderer(this);
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
@@ -291,32 +307,42 @@ public class SrsCameraView extends GLSurfaceView implements GLSurfaceView.Render
         int[] range = adaptFpsRange(SrsConfig.VFPS, params.getSupportedPreviewFpsRange());
         params.setPreviewFpsRange(range[0], range[1]);
         params.setPreviewFormat(ImageFormat.NV21);
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        params.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
-        params.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+//        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//        params.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+//        params.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
 
         List<String> supportedFocusModes = params.getSupportedFocusModes();
+
         if (supportedFocusModes != null && !supportedFocusModes.isEmpty()) {
-            if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+            Log.e("SrsCameraView", "supportedFocusModes:" + supportedFocusModes.size());
+            for (int i = 0; i < supportedFocusModes.size(); i++) {
+                Log.e("SrsCameraView", "supportedFocusModes:" + supportedFocusModes.get(i));
+            }
+            if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                Log.e("SrsCameraView", "Parameters:" + Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+            } else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                Log.e("SrsCameraView", "Parameters:" + Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
                 params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             } else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+                Log.e("SrsCameraView", "Parameters:" + Camera.Parameters.FOCUS_MODE_AUTO);
                 params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
                 mCamera.autoFocus(null);
-            } else {
-                params.setFocusMode(supportedFocusModes.get(0));
             }
         }
 
-        List<String> supportedFlashModes = params.getSupportedFlashModes();
-        if (supportedFlashModes != null && !supportedFlashModes.isEmpty()) {
-            if (supportedFlashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
-                if (mIsTorchOn) {
-                    params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                }
-            } else {
-                params.setFlashMode(supportedFlashModes.get(0));
-            }
-        }
+//        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
+//        List<String> supportedFlashModes = params.getSupportedFlashModes();
+//        if (supportedFlashModes != null && !supportedFlashModes.isEmpty()) {
+//            if (supportedFlashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+//                if (mIsTorchOn) {
+//                    params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+//                }
+//            } else {
+//                params.setFlashMode(supportedFlashModes.get(0));
+//            }
+//        }
 
         mCamera.setParameters(params);
 
@@ -426,6 +452,12 @@ public class SrsCameraView extends GLSurfaceView implements GLSurfaceView.Render
             mCamera.setParameters(params);
         }
     }
+
+    @Override
+    public void onAutoFocus(boolean success, Camera camera) {
+
+    }
+
 
     public interface PreviewCallback {
         void onGetRgbaFrame(byte[] data, int width, int height);

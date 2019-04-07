@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,13 +26,14 @@ import com.example.lee.videoandroid.presenter.RegisterPresenter;
 import com.example.lee.videoandroid.util.SharedPreUtil;
 import com.example.lee.videoandroid.util.StringUtil;
 import com.example.lee.videoandroid.util.ToastUtils;
+import com.example.lee.videoandroid.view.main.MainActivity;
 import com.google.gson.Gson;
 
 import android.support.v7.app.ActionBar;
 
 import butterknife.BindView;
 
-public class RegisterActivity extends BaseActivity implements RegisterContact.View {
+public class RegisterActivity extends BaseActivity<RegisterPresenter> implements RegisterContact.View {
 
     @BindView(R.id.nickName_ev)
     EditText nickNameEv;
@@ -86,23 +88,20 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
             public void onClick(View v) {
                 if (StringUtil.isEmpty(nickNameEv.getText().toString())) {
                     nickNameInputLayout.setError("手机号不能为空");
-                    nickNameInputLayout.setErrorTextAppearance(R.style.error_appearance);
+//                    nickNameInputLayout.setErrorTextAppearance(R.style.error_appearance);
                 } else if (StringUtil.isEmpty(passwordEv.getText().toString())) {
                     passwordInputLayout.setError("密码不能为空");
-                    passwordInputLayout.setErrorTextAppearance(R.style.error_appearance);
+//                    passwordInputLayout.setErrorTextAppearance(R.style.error_appearance);
                 } else if (StringUtil.isEmpty(userNameEv.getText().toString())) {
                     userNameInputLayout.setError("用户名不能为空");
-                    userNameInputLayout.setErrorTextAppearance(R.style.error_appearance);
+//                    userNameInputLayout.setErrorTextAppearance(R.style.error_appearance);
                 } else {
                     UserBean userBean = new UserBean();
                     userBean.setSex(sex);
                     userBean.setUserPhone(nickNameEv.getText().toString());
                     userBean.setUserPassword(passwordEv.getText().toString());
                     userBean.setUserName(userNameEv.getText().toString());
-                    if (mPresenter instanceof RegisterPresenter) {
-                        RegisterPresenter presenter = (RegisterPresenter) mPresenter;
-                        presenter.register(userBean);
-                    }
+                    mPresenter.register(userBean);
                 }
             }
         });
@@ -129,11 +128,15 @@ public class RegisterActivity extends BaseActivity implements RegisterContact.Vi
     @Override
     public void registerSuccess(UserBean userBean) {
         SharedPreUtil.saveString(this, Settings.SharedPreUserKey, new Gson().toJson(userBean));
-        Intent intent=new Intent();
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("userLoginData", new Gson().toJson(userBean));
+        startActivityForResult(intent, 0xc2);
     }
 
     @Override
     public void registerFailure(String errorMessage) {
-        ToastUtils.showShortToast("注册失败");
+        Log.e("errorMessage", "registerFailure: " + errorMessage);
+        ToastUtils.showShortToast("errorMessage");
     }
 }

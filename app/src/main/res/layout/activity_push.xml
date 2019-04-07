@@ -18,8 +18,8 @@
         android:id="@+id/push_title_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_layout_height"
-        android:visibility="invisible"
-        android:background="@drawable/push_title_bg">
+        android:background="@drawable/push_title_bg"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/left_btn"
@@ -86,9 +86,9 @@
         android:id="@+id/push_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_layout_height"
-        android:visibility="invisible"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/push_bottom_bg">
+        android:background="@drawable/push_bottom_bg"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/push_pause_btn"

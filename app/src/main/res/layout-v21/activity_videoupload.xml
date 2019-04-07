@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/videoImg"
+        android:layout_marginBottom="@dimen/midMargin"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:text="视频标题:"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/videoImg"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/title"
+        android:hint="为您的视频起一个标题吧~" />
+
+    <ImageView
+        android:id="@+id/videoImg"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp" />
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/linearProgressView"
+        android:layout_width="match_parent"
+        style="@android:style/Widget.Material.ProgressBar.Horizontal"
+        android:layout_height="40dp"
+        android:layout_below="@+id/videoImg"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/selectVideo"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearProgressView"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/login_btn"
+        android:text="选择视频"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/uploadVideo"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearProgressView"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/login_btn"
+        android:text="上传视频"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

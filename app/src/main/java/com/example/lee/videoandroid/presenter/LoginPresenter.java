@@ -10,6 +10,7 @@ import com.example.lee.videoandroid.network.HttpUtils;
 import com.example.lee.videoandroid.view.login.LoginActivity;
 import com.example.lee.videoandroid.view.main.HomeFragment;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
@@ -22,11 +23,13 @@ public class LoginPresenter extends BasePresenter<LoginActivity> implements Logi
     @Override
     public void login(UserBean userBean) {
         RequestBody body = RequestBody.create(MediaType.parse(HttpUtils.JSON_CONTENT_TYPE), new Gson().toJson(userBean));
-        HttpPresenter.getInstance().setContext(mView).setCallBack(new HttpTaskListener() {
+        HttpPresenter.getInstance().setContext(mView).isShowDialog(true).setCallBack(new HttpTaskListener() {
             @Override
             public void onSuccess(Object o) {
                 try {
-                    UserBean bean = new Gson().fromJson(o.toString(), UserBean.class);
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gson = builder.setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                    UserBean bean = gson.fromJson(o.toString(), UserBean.class);
                     mView.loginSuccess(bean);
                 } catch (Exception e) {
                     mView.loginFailure(e.toString());

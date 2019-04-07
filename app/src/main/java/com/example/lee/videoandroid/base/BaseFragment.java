@@ -1,10 +1,10 @@
 package com.example.lee.videoandroid.base;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +24,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     Api api;
     public P mPresenter;
     private CompositeSubscription mCompositeSubscription;
-    protected  Context mContext;
+    protected Context mContext;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -33,12 +34,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api= (Api) HttpUtils.getInstance().createRequest(Api.class);
-        mPresenter= TUtil.getT(this,0);
-        mContext=getActivity();
-        if(mPresenter!=null){
-            mPresenter.api=api;
-            mPresenter.mContext=mContext;
+        api = (Api) HttpUtils.getInstance().createRequest(Api.class);
+        mPresenter = TUtil.getT(this, 0);
+        mContext = getActivity();
+        if (mPresenter != null) {
+            mPresenter.api = api;
+            mPresenter.mContext = mContext;
             mPresenter.setView(this);
         }
     }
@@ -46,20 +47,23 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view=LayoutInflater.from(getActivity()).inflate(setLayoutView(),container,false);
+        View view = LayoutInflater.from(getActivity()).inflate(setLayoutView(), container, false);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        btBinder= ButterKnife.bind(this,view);
+        btBinder = ButterKnife.bind(this, view);
         initData(view);
         initView(view);
     }
 
     public abstract void initData(View view);
+
     public abstract void initView(View view);
+
     public abstract int setLayoutView();
+
     @Override
     public void onStart() {
         super.onStart();
@@ -85,14 +89,19 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         super.onDestroy();
     }
 
+    protected Unbinder getBtBinder() {
+        return btBinder;
+    }
+
     @Override
     public void onDestroyView() {
         removeSubscription();
-        if(btBinder!=null){
+        if (btBinder != null) {
             btBinder.unbind();
         }
         super.onDestroyView();
     }
+
     /**
      * 添加网络请求观察者
      *
@@ -112,11 +121,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         HttpUtils.getInstance().removeSubscription();
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.unsubscribe();
-            this.mCompositeSubscription=null;
+            this.mCompositeSubscription = null;
         }
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
     }
+
 }

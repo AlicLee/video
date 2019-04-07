@@ -51,11 +51,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
 //    compile rootProject.ext.jjdxm_v7
-    implementation project(path: ':ijkplayer-java')
-    implementation "com.android.support:appcompat-v7:$android_support_version"
+    compile project(path: ':ijkplayer-java')
+    compile "com.android.support:appcompat-v7:$android_support_version"
 }
 
 //apply from: 'https://raw.githubusercontent.com/jjdxmashl/jjdxm_ecodingprocess/master/bulidlib.gradle'

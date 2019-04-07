@@ -41,6 +41,7 @@ public class PreparePushPresenter extends BasePresenter<PreparePushActivity> imp
 
     @Override
     public void uploadIcon(File file) {
+        //todo bug
         RequestBody body = RequestBody.create(MediaType.parse(HttpUtils.MULT_PART_TYPE), file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), body);
         HttpPresenter.getInstance().setContext(mContext).setCallBack(new HttpTaskListener<BaseResponse>() {
